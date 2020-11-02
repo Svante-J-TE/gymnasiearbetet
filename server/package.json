@@ -1,0 +1,26 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "cool server thingy",
+  "main": "app.js",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.11",
+    "nodemon": "^2.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Svante-J-TE/gymnasiearbetet.git"
+  },
+  "author": "Svante Jonsson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Svante-J-TE/gymnasiearbetet/issues"
+  },
+  "homepage": "https://github.com/Svante-J-TE/gymnasiearbetet#readme"
+}
