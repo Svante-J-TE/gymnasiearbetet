@@ -13,7 +13,7 @@ app.use(express.static(clientDir))
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
-  res.render('pages/index.ejs')
+  res.render('pages/loginRegister.ejs')
 })
 
 app.listen(port, () => {
