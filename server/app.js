@@ -16,7 +16,7 @@ app.use(express.static(clientDir))
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
-  res.render('pages/loginRegister.ejs')
+  res.render('pages/createPost.ejs')
 })
 
 app.post('/createUser', async (req, res) => {
@@ -26,7 +26,7 @@ app.post('/createUser', async (req, res) => {
 })
 
 app.post('/createPost', async (req, res) => {
-
+  dBModule.saveToMongoose(MessageModel.createMessage("svante", req.body.title, req.body.message))
 })
 
 app.listen(port, () => {

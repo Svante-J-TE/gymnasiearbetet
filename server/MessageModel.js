@@ -1,14 +1,16 @@
 const mongoose = require('mongoose');
 
 const messagePostSchema = new mongoose.Schema({
+    user: String,
     title: String,
     message: String
 })
 
 const MessagePost = mongoose.model('Message', messagePostSchema);
 
-exports.createMessage = (inTitle, inMessage) =>{
+exports.createMessage = (inUser, inTitle, inMessage) =>{
     let message = new MessagePost({
+        user: inUser,
         title: inTitle,
         message: inMessage
     })
