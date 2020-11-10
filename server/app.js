@@ -1,5 +1,7 @@
 const express = require('express')
 const dBModule = require('./dBModule')
+const UserModel = require('./UserModel')
+const bcryptjs = require('bcryptjs')
 const app = express()
 const port = 3000
 dBModule.connectToMongoose('test')
@@ -14,6 +16,12 @@ app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
   res.render('pages/loginRegister.ejs')
+})
+
+app.post('/createUser', async (req, res) => {
+  const hashedPassword = await bcryptjs.hash(req.body.password, 10)
+  dBModule.saveToMongoose(UserModel.createUser(req.body.username, hashedPassword))
+  res.render('pages/index.ejs')
 })
 
 app.listen(port, () => {
