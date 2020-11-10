@@ -1,6 +1,7 @@
 const express = require('express')
 const dBModule = require('./dBModule')
 const UserModel = require('./UserModel')
+const MessageModel = require('./MessageModel')
 const bcryptjs = require('bcryptjs')
 const app = express()
 const port = 3000
@@ -22,6 +23,10 @@ app.post('/createUser', async (req, res) => {
   const hashedPassword = await bcryptjs.hash(req.body.password, 10)
   dBModule.saveToMongoose(UserModel.createUser(req.body.username, hashedPassword))
   res.render('pages/index.ejs')
+})
+
+app.post('/createPost', async (req, res) => {
+
 })
 
 app.listen(port, () => {
