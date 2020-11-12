@@ -14,8 +14,8 @@ exports.createUser = (inName, inPassword) =>{
     })
     return user;
 }
-
-exports.findUser = async () =>{
-    let user = await User.find({})
+/*
+exports.findUser = async (userName) =>{
+    let user = await User.find({name: userName})
     return user;
-}
+}*/

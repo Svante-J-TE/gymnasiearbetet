@@ -16,3 +16,7 @@ exports.saveToMongoose = (input) => {
     console.log("Input successfully saved to MongoDB")
   })
 }
+
+exports.findInMongoose = async (Model, findThis) => {
+  return await Model.find({name: findThis})
+}

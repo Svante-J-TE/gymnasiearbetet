@@ -16,12 +16,14 @@ app.use(express.static(clientDir))
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
-  res.render('pages/createPost.ejs')
+  res.render('pages/register.ejs')
 })
 
 app.post('/createUser', async (req, res) => {
-  const hashedPassword = await bcryptjs.hash(req.body.password, 10)
-  dBModule.saveToMongoose(UserModel.createUser(req.body.username, hashedPassword))
+  if(dBModule.findInMongoose(UserModel, req.body.username) == null){
+    const hashedPassword = await bcryptjs.hash(req.body.password, 10)
+    dBModule.saveToMongoose(UserModel.createUser(req.body.username, hashedPassword))
+  }
   res.render('pages/index.ejs')
 })
 
