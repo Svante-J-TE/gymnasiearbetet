@@ -5,6 +5,7 @@ const MessageModel = require('./MessageModel')
 const bcryptjs = require('bcryptjs')
 const app = express()
 const port = 3000
+var activeUser;
 dBModule.connectToMongoose('test')
 
 const clientDir = __dirname + "\\client\\"
@@ -27,6 +28,10 @@ app.get('/register', (req, res) => {
   res.render('pages/register.ejs')
 })
 
+app.get('/createPost', (req, res) => {
+  res.render('pages/createPost.ejs')
+})
+
 app.post('/createUser', async (req, res) => {
   let usernameTaken = await dBModule.findInMongoose(UserModel, req.body.username)
   if(!usernameTaken){
@@ -40,13 +45,15 @@ app.post('/login', async (req, res) =>{
   let username = await dBModule.findInMongoose(UserModel, req.body.username)
   if(username && bcryptjs.compare(req.body.password, username.password)){
     console.log("hejsan")
+    activeUser = req.body.username
   }
   res.redirect('/')
   
 })
 
 app.post('/createPost', async (req, res) => {
-  dBModule.saveToMongoose(MessageModel.createMessage("svante", req.body.title, req.body.message))
+  dBModule.saveToMongoose(createMessage(activeUser, req.body.title, req.body.message))
+  res.redirect('/')
 })
 
 app.listen(port, () => {
@@ -62,7 +69,7 @@ function createUser(inName, inPassword){
 }
 
 function createMessage(inUser, inTitle, inMessage){
-    let message = new MessagePost({
+    let message = new MessageModel({
         user: inUser,
         title: inTitle,
         message: inMessage
