@@ -16,15 +16,33 @@ app.use(express.static(clientDir))
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
+  res.render('pages/index.ejs')
+})
+
+app.get('/login', (req, res) => {
+  res.render('pages/login.ejs')
+})
+
+app.get('/register', (req, res) => {
   res.render('pages/register.ejs')
 })
 
 app.post('/createUser', async (req, res) => {
-  if(dBModule.findInMongoose(UserModel, req.body.username) == null){
+  let usernameTaken = await dBModule.findInMongoose(UserModel, req.body.username)
+  if(!usernameTaken){
     const hashedPassword = await bcryptjs.hash(req.body.password, 10)
-    dBModule.saveToMongoose(UserModel.createUser(req.body.username, hashedPassword))
+    await dBModule.saveToMongoose(createUser(req.body.username, hashedPassword))
   }
-  res.render('pages/index.ejs')
+  res.redirect('/login')
+})
+
+app.post('/login', async (req, res) =>{
+  let username = await dBModule.findInMongoose(UserModel, req.body.username)
+  if(username && bcryptjs.compare(req.body.password, username.password)){
+    console.log("hejsan")
+  }
+  res.redirect('/')
+  
 })
 
 app.post('/createPost', async (req, res) => {
@@ -34,3 +52,20 @@ app.post('/createPost', async (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`)
 }) 
+
+function createUser(inName, inPassword){
+    let user = new UserModel({
+        name: inName,
+        password: inPassword
+    })
+    return user;
+}
+
+function createMessage(inUser, inTitle, inMessage){
+    let message = new MessagePost({
+        user: inUser,
+        title: inTitle,
+        message: inMessage
+    })
+    return message;
+}

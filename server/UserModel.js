@@ -6,16 +6,4 @@ const userSchema = new mongoose.Schema({
 })
 
 const User = mongoose.model('User', userSchema);
-
-exports.createUser = (inName, inPassword) =>{
-    let user = new User({
-        name: inName,
-        password: inPassword
-    })
-    return user;
-}
-/*
-exports.findUser = async (userName) =>{
-    let user = await User.find({name: userName})
-    return user;
-}*/
+module.exports = User;

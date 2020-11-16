@@ -7,17 +7,4 @@ const messagePostSchema = new mongoose.Schema({
 })
 
 const MessagePost = mongoose.model('Message', messagePostSchema);
-
-exports.createMessage = (inUser, inTitle, inMessage) =>{
-    let message = new MessagePost({
-        user: inUser,
-        title: inTitle,
-        message: inMessage
-    })
-    return message;
-}
-
-exports.getAllMessages = async () =>{
-    let message = await MessagePost.find({})
-    return message;
-}
+module.exports = MessagePost;
