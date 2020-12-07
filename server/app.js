@@ -10,14 +10,16 @@ dBModule.connectToMongoose('test')
 
 const clientDir = __dirname + "\\client\\"
 
+//USE SET
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static(clientDir))
 
 app.set('view engine', 'ejs')
 
-app.get('/', (req, res) => {
-  res.render('pages/index.ejs')
+//GET
+app.get('/', async (req, res) => {
+  res.render('pages/index.ejs', {posts: await dBModule.findInDB(MessageModel)})
 })
 
 app.get('/login', (req, res) => {
@@ -32,6 +34,7 @@ app.get('/createPost', (req, res) => {
   res.render('pages/createPost.ejs')
 })
 
+//POST
 app.post('/createUser', async (req, res) => {
   let usernameTaken = await dBModule.findInMongoose(UserModel, req.body.username)
   if(!usernameTaken){
@@ -56,6 +59,7 @@ app.post('/createPost', async (req, res) => {
   res.redirect('/')
 })
 
+//LISTEN
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`)
 }) 

@@ -20,3 +20,7 @@ exports.saveToMongoose = (input) => {
 exports.findInMongoose = async (mdl, toFind) => {
   return await mdl.findOne({ name: toFind })
 }
+
+exports.findInDB = async (Model) => {
+  return await Model.find({});
+}
