@@ -34,6 +34,12 @@ app.get('/createPost', (req, res) => {
   res.render('pages/createPost.ejs')
 })
 
+app.get('/post', async (req, res) =>{
+  let post = req.query.room;
+  let test = await dBModule.findInDB(post).id;
+  res.render('pages/post.ejs', {post: await dBModule.findInMongoose(MessageModel, test)})
+})
+
 //POST
 app.post('/createUser', async (req, res) => {
   let usernameTaken = await dBModule.findInMongoose(UserModel, req.body.username)
