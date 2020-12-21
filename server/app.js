@@ -6,7 +6,7 @@ const bcryptjs = require('bcryptjs')
 const app = express()
 const port = 3000
 var activeUser;
-dBModule.connectToMongoose('test')
+dBModule.connectToMongoose('forum')
 
 const clientDir = __dirname + "\\client\\"
 
@@ -35,9 +35,9 @@ app.get('/createPost', (req, res) => {
 })
 
 app.get('/post', async (req, res) =>{
-  let post = req.query.room;
+ let post = req.query.post;
   let test = await dBModule.findInDB(post).id;
-  res.render('pages/post.ejs', {post: await dBModule.findInMongoose(MessageModel, test)})
+ res.render('pages/post', {post: await dBModule.findInMongoose(MessageModel, test)})
 })
 
 //POST
