@@ -16,7 +16,7 @@
         <input name="input" type="text" placeholder="Sök här (ex. hur gör man en for-loop)">
         <% for( let index = 0; index < posts.length; index++ ) { %>
             <h1><%= posts[index].title %> </h1>
-            <a href="./post?post=<%= posts[index].title %>">tjo <%= index %> </a>
+            <a href="./post?post=<%= posts[index].id %>">tjo <%= index %> </a>
         <% } %> 
     </main>
 </body>
