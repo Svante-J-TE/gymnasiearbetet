@@ -2,6 +2,7 @@ const express = require("express");
 const dBModule = require("./dBModule");
 const UserModel = require("./UserModel");
 const MessageModel = require("./MessageModel");
+const CommentModel = require("./CommentModel");
 const bcryptjs = require("bcryptjs");
 const app = express();
 const port = 3000;
@@ -38,9 +39,13 @@ app.get("/createPost", (req, res) => {
 
 app.get("/post", async (req, res) => {
   let post = req.query.post;
-  res.render("pages/post", {
-    post: await dBModule.findInMongoose(MessageModel, post),
-  });
+  if (post == null) {
+    res.redirect("/");
+  } else {
+    res.render("pages/post", {
+      post: await dBModule.findInMongoose(MessageModel, post),
+    });
+  }
 });
 
 //POST
@@ -61,7 +66,6 @@ app.post("/createUser", async (req, res) => {
 app.post("/login", async (req, res) => {
   let username = await dBModule.findInMongoose(UserModel, req.body.username);
   if (username && bcryptjs.compare(req.body.password, username.password)) {
-    console.log("hejsan");
     activeUser = req.body.username;
   }
   res.redirect("/");
@@ -72,6 +76,16 @@ app.post("/createPost", async (req, res) => {
     createMessage(activeUser, req.body.title, req.body.message)
   );
   res.redirect("/");
+});
+
+app.post("/post", async (req, res) => {
+  /*
+  dBModule.saveToMongoose(
+    createComment(activeUser, req.body.comment, await dBModule.findInMongoose(MessageModel, req.query.post))
+  )
+  */
+  res.redirect("/");
+  console.log("det funka");
 });
 
 //LISTEN
@@ -94,4 +108,14 @@ function createMessage(inUser, inTitle, inMessage) {
     message: inMessage,
   });
   return message;
+}
+
+function createComment(inUser, inComment, inPostId) {
+  let comment = new CommentModel({
+    user: inUser,
+    comment: inComment,
+    postId,
+    inPostId,
+  });
+  return comment;
 }

@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap-5.0.0/css/bootstrap.min.css">
     <title>Document</title>
 </head>
 <body>
     <h1><%= post.title %></h1>
     <p>test</p>
+
+    <form action="/post">
+        <div class="mb-3">
+          <label class="form-label">Kommentera</label>
+          <input type="text" class="form-control" id="comment">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
 </body>
 </html>
