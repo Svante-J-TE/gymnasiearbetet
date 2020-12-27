@@ -39,13 +39,11 @@ app.get("/createPost", (req, res) => {
 
 app.get("/post", async (req, res) => {
   let post = req.query.post;
-  if (post == null) {
-    res.redirect("/");
-  } else {
+  
     res.render("pages/post", {
       post: await dBModule.findInMongoose(MessageModel, post),
     });
-  }
+  
 });
 
 //POST
@@ -79,13 +77,12 @@ app.post("/createPost", async (req, res) => {
 });
 
 app.post("/post", async (req, res) => {
-  /*
-  dBModule.saveToMongoose(
-    createComment(activeUser, req.body.comment, await dBModule.findInMongoose(MessageModel, req.query.post))
-  )
-  */
-  res.redirect("/");
+  res.status(201).send();
   console.log("det funka");
+  console.log(comment, postId)
+  dBModule.saveToMongoose(
+    createComment(activeUser, comment, postId)
+  )
 });
 
 //LISTEN

@@ -1,21 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="bootstrap-5.0.0/css/bootstrap.min.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="bootstrap-5.0.0/css/bootstrap.min.css" />
     <title>Document</title>
-</head>
-<body>
+    <script>
+      function getPostId(name) {
+        return (
+          decodeURIComponent(
+            (new RegExp("[?|&]" + name + "=" + "([^&;]+?)(&|#|;|$)").exec(
+              location.search
+            ) || [null, ""])[1].replace(/\+/g, "%20")
+          ) || null
+        );
+      }
+
+      function addComment() {
+        let request = new XMLHttpRequest();
+        request.open("POST", "/post", true);
+        request.setRequestHeader(
+          "Content-type",
+          "application/x-www-form-urlencoded"
+        );
+
+        let comment = document.getElementById("comment").value;
+        let postId = getPostId("post");
+        request.send(`comment=${comment}&postId=${postId}`);
+        console.log(comment, postId)
+      }
+    </script>
+  </head>
+  <body>
     <h1><%= post.title %></h1>
     <p>test</p>
 
-    <form action="/post">
-        <div class="mb-3">
-          <label class="form-label">Kommentera</label>
-          <input type="text" class="form-control" id="comment">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-</body>
+    <form>
+      <div class="mb-3">
+        <label class="form-label">Kommentera</label>
+        <input type="text" class="form-control" id="comment" />
+      </div>
+      <button class="btn btn-primary" onclick="addComment()">Submit</button>
+    </form>
+  </body>
 </html>
