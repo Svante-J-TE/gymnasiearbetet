@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/server/client/CSS/style.css">
-    <title>Document</title>
-</head>
-<body>
-    <form action="/createUser" method="post">
-        <h1>Create User</h1>
-        <input type="text" name="username" placeholder="username">
-        <input type="password" name="password" placeholder="password">
-        <button type="submit">Okej</button>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="CSS/style.css">
+        <link rel="stylesheet" href="bootstrap-5.0.0/css/bootstrap.min.css" />
+        <title>Document</title>
+    </head>
+    <body>
+    <form action="/createUser" method="post" class="position-absolute top-50 start-50 translate-middle w-50 h-50">
+        <h1 class="h3 mb-5 fw-normal ">Skapa användare</h1>
+        <input type="text" class="form-control mb-5" placeholder="Användarnamn" name="username" required autofocus>
+        <input type="password" class="form-control mb-5" placeholder="Lösenord" name="password" required>
+        <button class="w-100 btn btn-lg btn-primary " type="submit">Skapa</button>
     </form>
-</body>
+    </body>
 </html>
