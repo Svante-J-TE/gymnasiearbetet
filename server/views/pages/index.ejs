@@ -4,20 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="bootstrap-5.0.0/css/bootstrap.min.css" />
     <title>Document</title>
 </head>
 <body>
-    <header>
-        <a href="#">logo</a>
-        <a href="#">Om oss</a>
-        <a href="#">Kontakt</a>
-    </header>
-    <main>
-        <input name="input" type="text" placeholder="Sök här (ex. hur gör man en for-loop)">
-        <% for( let index = 0; index < posts.length; index++ ) { %>
-            <h1><%= posts[index].title %> </h1>
-            <a href="./post?post=<%= posts[index].id %>">tjo <%= index %> </a>
-        <% } %> 
+    <%- include ("../partials/navbar.ejs") %>
+
+    <main class="w-100 d-flex justify-content-center mt-5">
+        <div class="w-50">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Sök här (ex. hur gör man en for-loop)" aria-label="Search" name="input">
+                <button class="btn btn-outline-success" type="submit">Sök</button>
+            </form>
+            <% for( let index = 0; index < posts.length; index++ ) { %>
+                <div class="card my-5">
+                    <div class="card-header">
+                        <%= posts[index].language %>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><%= posts[index].title %></h5>
+                        <a href="/post?post=<%= posts[index].id %>" class="btn btn-primary">Läs mer</a>
+                    </div>
+                </div>
+            <% } %> 
+        </div>
+        
     </main>
 </body>
 </html>
